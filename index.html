@@ -5,76 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: white;
-            text-align: center;
-        }
-        .container {
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            margin: 100px auto;
-        }
-        input, button {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: none;
-        }
-        button {
-            background: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        .login-link {
-            display: block;
-            margin-top: 10px;
-            color: #007bff;
-            text-decoration: none;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; background: #121212; color: white; }
+        form { background: #222; padding: 20px; width: 300px; margin: auto; border-radius: 10px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; background: #333; border: none; color: white; }
+        button { background: #008CBA; color: white; padding: 10px; border: none; cursor: pointer; }
+        a { color: #00ffcc; text-decoration: none; }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h2>Sign Up</h2>
-        <input type="text" id="username" placeholder="Enter your username" required>
-        <input type="email" id="email" placeholder="Enter your email" required>
-        <input type="password" id="password" placeholder="Enter your password" required>
-        <button onclick="signup()">Sign Up</button>
-        <a class="login-link" href="https://pony-darling-unicorn.ngrok-free.app/login">Already have an account?</a>
-    </div>
+    <h2>Sign Up</h2>
+    <form id="signup-form">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="https://pony-darling-unicorn.ngrok-free.app/login">Login here</a></p>
 
     <script>
-        function signup() {
+        document.getElementById("signup-form").addEventListener("submit", async function(e) {
+            e.preventDefault();
             const username = document.getElementById("username").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
-            if (!username || !email || !password) {
-                alert("All fields are required!");
-                return;
-            }
-
-            fetch("https://your-render-api-url.onrender.com/signup", { // Replace with your Render API URL
+            const response = await fetch("/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, email, password })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-            })
-            .catch(error => console.error("Error:", error));
-        }
-    </script>
+            });
 
+            const result = await response.json();
+            alert(result.message);
+        });
+    </script>
 </body>
 </html>
