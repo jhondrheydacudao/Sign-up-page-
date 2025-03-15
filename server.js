@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const app = express();
 app.use(express.json());
-app.use(express.static(__dirname)); // Serve index.html
+app.use(express.static(__dirname)); // Serve index.html and styles.css
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
