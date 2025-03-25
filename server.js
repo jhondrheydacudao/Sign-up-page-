@@ -37,7 +37,7 @@ app.post("/signup", async (req, res) => {
 
     try {
         await transporter.sendMail(mailOptions);
-        res.json({ message: "Signup successful! Wait for approval." });
+        res.json({ message: "Signup successful!." });
     } catch (error) {
         console.error("Error sending email:", error);
         res.status(500).json({ message: "Error sending email." });
